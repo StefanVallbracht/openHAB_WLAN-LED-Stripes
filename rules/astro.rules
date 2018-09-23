@@ -1,0 +1,27 @@
+val java.util.Random rand = new java.util.Random
+
+rule "Abendlicht Flur"
+when
+    Channel 'astro:sun:home:set#event' triggered START 
+then
+    if (TreppeLEDStripeEveningLight.state == ON)
+    {
+        logInfo("rules","It's evening. Let's switch on the lights.")
+    	var randomNumber = rand.nextInt(361)
+        var DecimalType hue = new DecimalType(randomNumber) // 0-360; 0=red, 120=green, 240=blue, 360=red(again)
+        var PercentType sat = new PercentType(95) // 0-100
+        var PercentType bright = new PercentType(5)
+        var HSBType light
+        light = new HSBType(hue,sat,bright)
+        TreppeLEDStripeColor.sendCommand(light)
+        TreppeLEDStripeWhite.sendCommand(0)
+        TreppeLEDStripePower.sendCommand(ON)
+    }
+end
+
+rule "Abendlicht ausschalten"
+when
+    Time cron "0 0 23 * * ? *"
+then
+    TreppeLEDStripePower.sendCommand(OFF)
+end

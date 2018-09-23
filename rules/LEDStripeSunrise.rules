@@ -1,0 +1,79 @@
+rule "Sunrise"
+when 
+	Item sunriseSwitch changed to ON
+then
+						var Timer timer
+						var Integer Dimmer
+						var Integer DimmerCheck
+						var Integer HueVal
+						var Integer SatVal
+						var DecimalType hue = new DecimalType(0) // 0-360; 0=red, 120=green, 240=blue, 360=red(again)
+						var PercentType sat = new PercentType(100) // 0-100
+						var PercentType bright = new PercentType(0)
+						var HSBType light
+
+						var Integer sunriseBrightness = (sunriseBrightness.state as DecimalType).intValue   // Maximum % of Light
+
+						var Integer sunrisePhase1Duration = (sunrisePhase1Duration.state as DecimalType).intValue * 60 * 1000   // * seconds * milliseconds
+						var Integer sunrisePhase2Duration = (sunrisePhase2Duration.state as DecimalType).intValue * 60 * 1000 / sunriseBrightness
+						var Integer sunrisePhase3Duration = (sunrisePhase3Duration.state as DecimalType).intValue * 60 * 1000 / sunriseBrightness
+						var Integer sunrisePhase4Duration = (sunrisePhase4Duration.state as DecimalType).intValue * 1000
+
+						Dimmer = 0
+						HueVal = 0
+						SatVal = 100
+						DimmerCheck=Dimmer
+
+						light = new HSBType(hue,sat,bright)
+						gLedStripesColor.members.forEach[s | s.sendCommand(light)]  // reset the stripe values
+						gLedStripesWhite.members.forEach[s | s.sendCommand(Dimmer)] // reset the stripe values for white
+
+						postUpdate(sunriseSwitch, ON)  
+						gLedStripesPower.members.forEach[s | s.sendCommand(ON)] // switch the stripes on
+
+						logInfo("rules","Sunrise started.")
+						while(sunriseSwitch.state == ON && Dimmer<=sunriseBrightness && Dimmer<100 && (sunrisePhase1Switch.state == ON || sunrisePhase2Switch.state == ON)) // End up at x% brightness
+						{
+							if (Dimmer==DimmerCheck)
+							{
+								Dimmer = Dimmer + 1
+								bright = new PercentType(Dimmer)
+								hue = new DecimalType(HueVal)
+								sat = new PercentType(SatVal)
+								light = new HSBType(hue,sat,bright)
+								if ((Dimmer==1) && (sunrisePhase1Switch.state == ON))
+								{
+									logInfo("rules","Sunrise: 1st phase started. ")
+									gLedStripesColor.members.forEach[s | s.sendCommand(light)]
+									Thread::sleep(sunrisePhase1Duration) // if sun arise wait with the light beams
+								} 
+								if (sunrisePhase2Switch.state == ON)
+								{                     
+									gLedStripesColor.members.forEach[s | s.sendCommand(light)]
+									if (HueVal<10) {
+										logInfo("rules","Sunrise: 2nd phase started - Color " + HueVal)
+										HueVal = HueVal + 1 // Increment from 0 to 10
+									} 
+									Thread::sleep(sunrisePhase2Duration)
+								}
+								DimmerCheck = Dimmer
+							}
+						}
+						Dimmer = 0
+						DimmerCheck = Dimmer
+						logInfo("rules","Sunrise: 3rd phase started.")
+						while(sunriseSwitch.state == ON && Dimmer<=sunriseBrightness && Dimmer<100 && sunrisePhase3Switch.state == ON) // End up at x% brightness
+						{
+							if ((sunrisePhase3Switch.state == ON) && (Dimmer==DimmerCheck))
+							{
+								gLedStripesWhite.members.forEach[s | s.sendCommand(Dimmer)]
+								
+								Dimmer = Dimmer + 1
+								Thread::sleep(sunrisePhase3Duration)
+								DimmerCheck = Dimmer 
+							}
+						}
+						postUpdate(sunriseSwitch, OFF)  
+						logInfo("rules","Sunrise: Finished.")
+
+end

@@ -1,0 +1,34 @@
+sitemap LEDStripeSunrise label="LED-Stripe Sunrise"
+{
+	Frame {
+	    Switch  item=sunriseSwitch label="Start Sunrise" icon="sunrise"
+	}
+    Frame label="General Settings" {
+    	Slider item=sunriseBrightness label="Maximum Brightness" icon="Dimmer"
+    }
+    Frame label="Phasen" {
+        Switch item=sunrisePhase1Switch label="Phase 1"
+    	Setpoint item=sunrisePhase1Duration label="Duration Phase 1 (rot)" minValue=1 maxValue=60 step=1
+        Switch item=sunrisePhase2Switch label="Phase 2"
+    	Setpoint item=sunrisePhase2Duration label="Duration Phase 2 (gelb)" minValue=1 maxValue=60 step=1
+        Switch item=sunrisePhase3Switch label="Phase 3"
+    	Setpoint item=sunrisePhase3Duration label="Duration Phase 3 (weiß)" minValue=1 maxValue=60 step=1
+    }
+
+    Frame label="LED Streifen Treppe" {             
+        Switch item=TreppeLEDStripePower label="AN/AUS" icon="light"
+        Slider item=TreppeLEDStripeWhite label="Weiß" icon="Dimmer"
+        Colorpicker item=TreppeLEDStripeColor label="Farbe" icon="Slider"
+        Switch item=TreppeLEDStripeEveningLight label="Abendlicht" icon="light"
+    }
+
+    Frame label="LED Streifen Schlafzimmer" {           
+        Switch item=DGLEDStripePower label="AN/AUS" icon="light"
+        Slider item=DGLEDStripeWhite label="Weiß" icon="Dimmer"
+        Colorpicker item=DGLEDStripeColor label="Farbe" icon="Slider"
+    }
+
+    Frame {
+        Switch  item=incomingCallLightAlarm label="Telefon Lichtalarm" icon="switch"
+    }
+} 

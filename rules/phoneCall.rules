@@ -1,0 +1,74 @@
+rule "Incoming Call"
+when
+    Item Incoming_Call changed to ON
+then
+    logInfo("rules","Incoming Call.")
+
+    //Letze Nummer aktualisieren
+    //val CallType call = Incoming_Call_No.state as CallType
+    postUpdate(Letzter_Anrufer, Incoming_Call_No.state)
+
+    if (incomingCallLightAlarm.state == ON)
+    {
+
+        // saving the current status
+        var TEMP_TreppeLEDStripeColor = TreppeLEDStripeColor.state as HSBType
+        val TEMP_TreppeLEDStripePower = if (TreppeLEDStripePower.state == ON) 1 else 0
+        var TEMP_DGLEDStripeColor = DGLEDStripeColor.state as HSBType
+        val TEMP_DGLEDStripePower = if (DGLEDStripePower.state == ON) 1 else 0
+
+        // light alarm
+
+        var DecimalType hue = new DecimalType(5) // 0-360; 0=red, 120=green, 240=blue, 360=red(again)
+        var PercentType sat = new PercentType(0) // 0-100
+        var PercentType bright = new PercentType(100)
+        var HSBType light
+
+        var Integer AlarmLoop = 2
+        while(AlarmLoop>0) {                // for some reason Incoming_Call.state would loop infinity, so a counted loop helps
+
+            sat = new PercentType(0)        // set full color
+            light = new HSBType(hue,sat,bright)
+            gLedStripesColor.members.forEach[s | s.sendCommand(light)]
+
+            if (TEMP_TreppeLEDStripePower == 1 && TEMP_DGLEDStripePower == 1){ 
+                Thread::sleep(1000)
+            } else if (TEMP_TreppeLEDStripePower == 0 || TEMP_DGLEDStripePower == 0){
+                gLedStripesPower.members.forEach[s | s.sendCommand(ON)]
+            }
+
+            sat = new PercentType(100)      // set the color "white"
+            light = new HSBType(hue,sat,bright)
+            gLedStripesColor.members.forEach[s | s.sendCommand(light)]
+            Thread::sleep(1000)
+    
+            if (Incoming_Call.state!=ON) {  // Check if it incoming call is off, if yes skip the loop
+                AlarmLoop = 0
+            } else {
+                AlarmLoop = AlarmLoop -1
+                logInfo("rules","Incoming Call: Blinking " + AlarmLoop + "times left.")
+            }
+        }
+
+        // set back the previous settings to the stripes
+        TreppeLEDStripeColor.sendCommand(TEMP_TreppeLEDStripeColor)
+        DGLEDStripeColor.sendCommand(TEMP_DGLEDStripeColor)
+        if (TEMP_TreppeLEDStripePower == 0){ TreppeLEDStripePower.sendCommand(OFF) }
+        if (TEMP_DGLEDStripePower == 0){ DGLEDStripePower.sendCommand(OFF) }
+
+    }
+end
+
+
+//rule "Call ended"
+//when
+//    Item Active_Call changed from ON to OFF or
+//    Item Incoming_Call changed from ON to OFF
+//then
+//    logInfo("rules","Call ended.")
+    //XBMC starten
+    //    if (MMC63_PLAY_TEMP.state == ON) {
+    //        sendCommand(MMC63_PLAY, ON)
+    //    }
+ 
+//end
