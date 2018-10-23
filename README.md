@@ -26,10 +26,12 @@ Half an hour before sunset the LED-Stripe will be switched on with a randomized 
 * Sunrise: Final Blue sunrise phase to push the melatonin level ;)
 * Evening light: Set when the light will be switched off or how long it should stay switched on.
 * Sunset
+
 (Any suggestions? Please let me know!)
 
 
 ## Change Log:
 
 2018-10-23	"Evening Light" won't be switched on if the light is already switched on.
+
 2018-10-23	Minor fixes and changes for a more general use
