@@ -4,9 +4,9 @@ when
 then
     logInfo("rules","Incoming Call.")
 
-    //Letze Nummer aktualisieren
+    //update phone number of the last call
     //val CallType call = Incoming_Call_No.state as CallType
-    postUpdate(Letzter_Anrufer, Incoming_Call_No.state)
+    //postUpdate(Letzter_Anrufer, call) // experimental, doesn't work for some reason
 
     if (incomingCallLightAlarm.state == ON)
     {
@@ -24,7 +24,7 @@ then
         var PercentType bright = new PercentType(100)
         var HSBType light
 
-        var Integer AlarmLoop = 2
+        var Integer AlarmLoop = 10
         while(AlarmLoop>0) {                // for some reason Incoming_Call.state would loop infinity, so a counted loop helps
 
             sat = new PercentType(0)        // set full color

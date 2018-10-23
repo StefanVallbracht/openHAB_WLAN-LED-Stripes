@@ -1,6 +1,6 @@
 val java.util.Random rand = new java.util.Random
 
-rule "Abendlicht Flur"
+rule "Evening Light"
 when
     Channel 'astro:sun:home:set#event' triggered START 
 then
@@ -19,9 +19,9 @@ then
     }
 end
 
-rule "Abendlicht ausschalten"
+rule "Evening Light switch off"
 when
-    Time cron "0 0 23 * * ? *"
+    Time cron "0 20 23 * * ? *"
 then
     TreppeLEDStripePower.sendCommand(OFF)
 end

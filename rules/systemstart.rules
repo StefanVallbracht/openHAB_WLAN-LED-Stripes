@@ -1,0 +1,34 @@
+rule "Initialization"
+when 
+    System started
+then
+     postUpdate(alarmEnabled, ON)
+     postUpdate(radioEnabled, ON)
+     
+     postUpdate(alarmMonday, ON)
+     postUpdate(alarmTuesday, ON)
+     postUpdate(alarmWensday, ON)
+     postUpdate(alarmThursday, ON)
+     postUpdate(alarmFriday, ON)
+     postUpdate(alarmSaturday, OFF)
+     postUpdate(alarmSunday, OFF) 
+     postUpdate(alarmOffset1Minutes, 20)
+     postUpdate(alarmOffset2Minutes, 40)
+     postUpdate(alarmOffset3Minutes, 50)
+     postUpdate(alarmTimeHour, 5)
+     postUpdate(alarmTimeMinutes, 50)
+
+     postUpdate(sunriseSwitch, OFF)  
+     postUpdate(sunriseBrightness, 50)
+     postUpdate(sunrisePhase1Switch, ON)
+     postUpdate(sunrisePhase2Switch, ON)
+     postUpdate(sunrisePhase3Switch, ON)
+     postUpdate(sunrisePhase1Duration, 10)
+     postUpdate(sunrisePhase2Duration, 10)
+     postUpdate(sunrisePhase3Duration, 3)
+     postUpdate(sunrisePhase4Duration, 3)
+
+     postUpdate(TreppeLEDStripeEveningLight, ON)
+     postUpdate(incomingCallLightAlarm, ON) 
+
+end
