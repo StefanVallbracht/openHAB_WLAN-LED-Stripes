@@ -4,7 +4,7 @@ rule "Evening Light"
 when
     Channel 'astro:sun:home:set#event' triggered START 
 then
-    if ((TreppeLEDStripeEveningLight.state == ON) && (TreppeLEDStripePower == OFF))
+    if ((TreppeLEDStripeEveningLight.state == ON) && (TreppeLEDStripePower.state == OFF))
     {
         logInfo("rules","It's evening. Let's switch on the lights.")
     	var randomNumber = rand.nextInt(361)

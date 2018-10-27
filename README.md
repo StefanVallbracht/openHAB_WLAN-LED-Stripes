@@ -23,6 +23,7 @@ Half an hour before sunset the LED-Stripe will be switched on with a randomized 
 
 ## Planned Features
 * Phone Alarm: To set colors to the phone alarm - depending on who is calling  
+* BlinkingLight in several colors: Could be used for Phone Alarm, Wake Up Alarm, Disco light, etc.
 * Sunrise: Final Blue sunrise phase to push the melatonin level ;)
 * Evening light: Set when the light will be switched off or how long it should stay switched on.
 * Sunset
@@ -32,6 +33,6 @@ Half an hour before sunset the LED-Stripe will be switched on with a randomized 
 
 ## Change Log:
 
+### Version 0.7
 2018-10-23	"Evening Light" won't be switched on if the light is already switched on.
-
 2018-10-23	Minor fixes and changes for a more general use
