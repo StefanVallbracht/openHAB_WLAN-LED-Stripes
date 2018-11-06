@@ -1,34 +1,37 @@
-// Items for the Sunrise
-
+// LED Stripe Groups
 Group gLedStripesPower
 Group gLedStripesWhite
 Group gLedStripesColor
 
-// Schalter für LEDStreifen DG
+// Switches for LEDStripes
+Switch LEDStripesBlinkingBrightness "LED Stripes - Blinking Brightness"
+
+// Switches for LEDStripes RoofTop
 Switch DGLEDStripePower "AN/AUS" <poweroutlet> (gLedStripesPower) { channel="wifiled:wifiled:XYZ:power" }
 Dimmer DGLEDStripeWhite "Weiß" (gLedStripesWhite) { channel="wifiled:wifiled:XYZ:white" }
 Color DGLEDStripeColor "Farbe" (gLedStripesColor) { channel="wifiled:wifiled:XYZ:color" }
 
-// Schalter für LEDStreifen Treppe
+// Switches for LEDStripes Stairs
 Switch TreppeLEDStripePower "AN/AUS" <poweroutlet> (gLedStripesPower) { channel="wifiled:wifiled:XYZ:power" } 
 Dimmer TreppeLEDStripeWhite "Weiß" (gLedStripesWhite) { channel="wifiled:wifiled:XYZ:white" } 
 Color TreppeLEDStripeColor "Farbe" (gLedStripesColor) { channel="wifiled:wifiled:XYZ:color" }
 Switch TreppeLEDStripeEveningLight "TreppeLEDStripeEveningLight"
 
-
-
-Group gSunriseDuration
-
-// String SunriseDuration "%s"
-
+// Sunrise
 Switch sunriseSwitch "Sunrise"
 Dimmer sunriseBrightness "Brightness [%d]"
 
 Switch sunrisePhase1Switch "sunrisePhase1Switch"
-Number sunrisePhase1Duration  "Sunrise Phase 1 Duration [%d]" <clock> (gSunriseDuration)
+Number sunrisePhase1Duration  "Sunrise Phase 1 Duration [%d]" <clock>
 Switch sunrisePhase2Switch "sunrisePhase2Switch"
-Number sunrisePhase2Duration  "Sunrise Phase 2 Duration [%d]" <clock> (gSunriseDuration)
+Number sunrisePhase2Duration  "Sunrise Phase 2 Duration [%d]" <clock>
 Switch sunrisePhase3Switch "sunrisePhase3Switch"
-Number sunrisePhase3Duration  "Sunrise Phase 3 Duration [%d]" <clock> (gSunriseDuration)
+Number sunrisePhase3Duration  "Sunrise Phase 3 Duration [%d]" <clock>
 Switch sunrisePhase4Switch "sunrisePhase4Switch"
-Number sunrisePhase4Duration  "Sunrise Phase 4 Duration [%d]" <clock> (gSunriseDuration)
+Number sunrisePhase4Duration  "Sunrise Phase 4 Duration [%d]" <clock>
+
+// Evening Mood Light
+Dimmer eveningMoodColor "Color"
+Switch eveningMoodRandomColor "RandomColor"
+Dimmer eveningMoodBrightness "Brightness [%d]"
+Dimmer eveningMoodSaturation "Saturation [%d]"

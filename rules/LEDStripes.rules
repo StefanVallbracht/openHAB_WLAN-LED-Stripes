@@ -1,8 +1,7 @@
-rule "Sunrise"
+rule "LED Stripes - Sunrise"
 when 
 	Item sunriseSwitch changed to ON
 then
-	var Timer timer
 	var Integer Dimmer
 	var Integer DimmerCheck
 	var Integer HueVal
@@ -75,5 +74,56 @@ then
 	}
 	postUpdate(sunriseSwitch, OFF)  
 	logInfo("rules","Sunrise: Finished.")
+
+end
+
+
+rule "LED Stripes - Blinking Brightness"
+when 
+    Item LEDStripesBlinkingBrightness changed to ON
+then
+
+    var Boolean blinkingBrightnessLoop = true
+    var Timer blinkingBrightnessLoopTimer = null
+    var Integer blinkingBrightnessLoopTimerDuration = 10
+    var Timer blinkingBrightnessLoopLooper = null
+    var Integer switchColor = 1
+
+    // setting the loop to a specific duration
+    blinkingBrightnessLoopTimer = createTimer(now.plusSeconds(blinkingBrightnessLoopTimerDuration), [ |
+        blinkingBrightnessLoop = false
+    ])
+
+    logInfo("rules","Starting LEDStripes Blinking for "+blinkingBrightnessLoopTimerDuration+" seconds")
+
+    // setting initial light before looping
+    gLedStripesColor.members.forEach[s | s.sendCommand(100)]
+    gLedStripesWhite.members.forEach[s | s.sendCommand(100)]
+
+    // switching the light in a loop
+    blinkingBrightnessLoopLooper = createTimer(now.plusSeconds(1), [ |
+        if(blinkingBrightnessLoop === true) { 
+
+            if(switchColor == 0) {
+                // setting brightness to 50%
+                gLedStripesColor.members.forEach[s | s.sendCommand(50)]
+                gLedStripesWhite.members.forEach[s | s.sendCommand(50)]
+                switchColor = 1
+            }
+            else {
+                // setting brightness to 100%
+                gLedStripesColor.members.forEach[s | s.sendCommand(100)]
+                gLedStripesWhite.members.forEach[s | s.sendCommand(100)]
+                switchColor = 0
+            }
+
+            // Reschedule the timer blinkingBrightnessLoopLooper
+            blinkingBrightnessLoopLooper.reschedule(now.plusSeconds(1))
+        } else {
+            blinkingBrightnessLoopLooper.cancel
+        }
+    ])
+
+    postUpdate(LEDStripesBlinkingBrightness, OFF)	// resetting switch item
 
 end

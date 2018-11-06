@@ -28,6 +28,9 @@ then
      postUpdate(sunrisePhase3Duration, 3)
      postUpdate(sunrisePhase4Duration, 3)
 
+     postUpdate(eveningMoodBrightness, 10)
+     postUpdate(eveningMoodSaturation, 40)
+ 
      postUpdate(TreppeLEDStripeEveningLight, ON)
      postUpdate(incomingCallLightAlarm, ON) 
 

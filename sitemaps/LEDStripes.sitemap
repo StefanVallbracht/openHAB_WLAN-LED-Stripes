@@ -1,34 +1,95 @@
 sitemap LEDStripeSunrise label="LED-Stripe Sunrise"
 {
-	Frame {
-	    Switch  item=sunriseSwitch label="Start Sunrise" icon="sunrise"
-	}
-    Frame label="General Settings" {
-    	Slider item=sunriseBrightness label="Maximum Brightness" icon="Dimmer"
-    }
-    Frame label="Phasen" {
-        Switch item=sunrisePhase1Switch label="Phase 1"
-    	Setpoint item=sunrisePhase1Duration label="Duration Phase 1 (rot)" minValue=1 maxValue=60 step=1
-        Switch item=sunrisePhase2Switch label="Phase 2"
-    	Setpoint item=sunrisePhase2Duration label="Duration Phase 2 (gelb)" minValue=1 maxValue=60 step=1
-        Switch item=sunrisePhase3Switch label="Phase 3"
-    	Setpoint item=sunrisePhase3Duration label="Duration Phase 3 (weiß)" minValue=1 maxValue=60 step=1
-    }
 
-    Frame label="LED Streifen Treppe" {             
-        Switch item=TreppeLEDStripePower label="AN/AUS" icon="light"
-        Slider item=TreppeLEDStripeWhite label="Weiß" icon="Dimmer"
-        Colorpicker item=TreppeLEDStripeColor label="Farbe" icon="Slider"
-        Switch item=TreppeLEDStripeEveningLight label="Abendlicht" icon="light"
-    }
+    Frame {
+        Text label="LED Stripes" {
 
-    Frame label="LED Streifen Schlafzimmer" {           
-        Switch item=DGLEDStripePower label="AN/AUS" icon="light"
-        Slider item=DGLEDStripeWhite label="Weiß" icon="Dimmer"
-        Colorpicker item=DGLEDStripeColor label="Farbe" icon="Slider"
+            Frame label="LED Stripe Stairs" {             
+                Switch item=TreppeLEDStripePower label="ON/OFF" icon="switch"
+                Slider item=TreppeLEDStripeWhite label="White" icon="Dimmer"
+                Colorpicker item=TreppeLEDStripeColor label="Color" icon="Slider"
+                Switch item=TreppeLEDStripeEveningLight label="Automatic Evening Mood Light (will be switched at sunset)" icon="switch"
+            }
+
+            Frame label="LED Stripe Bedroom" {           
+                Switch item=DGLEDStripePower label="ON/OFF" icon="switch"
+                Slider item=DGLEDStripeWhite label="White" icon="Dimmer"
+                Colorpicker item=DGLEDStripeColor label="Color" icon="Slider"
+            }
+
+        }
     }
 
     Frame {
-        Switch  item=incomingCallLightAlarm label="Telefon Lichtalarm" icon="switch"
+        Text label="Sunrise Settings" {
+
+            Frame {
+                Switch  item=sunriseSwitch label="Start Sunrise" icon="sunrise"
+            }
+            Frame label="General Settings" {
+                Slider item=sunriseBrightness label="Maximum Brightness" icon="Dimmer"
+            }
+            Frame label="Phases" {
+                Switch item=sunrisePhase1Switch label="Phase 1"
+                Setpoint item=sunrisePhase1Duration label="Duration Phase 1 (red)" minValue=1 maxValue=60 step=1
+                Switch item=sunrisePhase2Switch label="Phase 2"
+                Setpoint item=sunrisePhase2Duration label="Duration Phase 2 (yellow)" minValue=1 maxValue=60 step=1
+                Switch item=sunrisePhase3Switch label="Phase 3"
+                Setpoint item=sunrisePhase3Duration label="Duration Phase 3 (white)" minValue=1 maxValue=60 step=1
+            }
+
+        }
     }
+
+    Frame {
+        Text label="Evening Light" icon="sunset" {
+
+            Frame label="Randomized Color" { 
+                Slider item=eveningMoodBrightness label="Brightness" icon="Dimmer"
+                Slider item=eveningMoodSaturation label="Saturation" icon="Dimmer"
+            }
+
+        }
+    }
+
+
+    Frame {
+        Text label="Specials" {
+
+            Frame {
+                Text label="If someone is calling let the stripes blink. For this a FritzBox (which is dealing with your calls) and the FritzBox Binding is needed."
+                Switch  item=incomingCallLightAlarm label="Phone Light Alarm" icon="switch"
+            }
+
+            Frame {
+                Text label="Let the stripes blink using the brightness (Stripes needs to be switched on)"
+                Switch  item=LEDStripesBlinkingBrightness label="Blinking Brightness" icon="light"
+            }
+
+        }
+    }
+
+    Frame {
+        // Astro
+        Text item=Current_DateTime label="Astro [%1$tA, %1$td.%1$tm.%1$tY %1$tT]" icon="sun_clouds" {
+                Frame label="Jetzt" {
+                    Text item=Day_Phase label="Tageszeit" icon="sunmoon"
+                    Text item=Sunrise_Time label="Sonnenaufgang" icon="sunrise"
+                    Text item=Sunset_Time  label="Sonnenuntergang" icon="sunset"
+                    Text item=Zodiac_Sign label="Tierkreiszeichen" icon="colorwheel"
+                    Text item=Moon_Phase label="Mondphase"
+                    Text item=Moon_Next_Full label="Nächster Vollmond" icon="moon"
+                        visibility=[Moon_Phase == WAXING_CRESCENT,
+                            Moon_Phase == FIRST_QUARTER,
+                            Moon_Phase == WAXING_GIBBOUS,
+                            Moon_Phase == FULL]
+                    Text item=Moon_Next_New  label="Nächster Neumond" icon="moon"
+                        visibility=[Moon_Phase == WANING_GIBBOUS,
+                            Moon_Phase == THIRD_QUARTER,
+                            Moon_Phase == WANING_CRESCENT,
+                            Moon_Phase == NEW]
+                }
+            }
+    }
+
 } 
