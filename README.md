@@ -1,7 +1,7 @@
 # openHAB WLAN-LED-Stripes Light-Effects
 
 If you have openHab and WLAN-LED-Stripes (i.e. Generic Magic UFO-WiFi LED-Controller connected to a LED-Stripe) you can add with these scripts some features to your openHab. These files containing example items and an example sitemap which should enables you to have quick results.
-It's needed that the Wifi LED Binding is installed.
+It's needed that the Wifi LED Binding is installed. Everything working on openHAB 2.3
 
 ## The Features:
 
@@ -37,6 +37,9 @@ Half an hour before sunset the LED-Stripe will be switched on with a randomized 
 
 
 ## Change Log:
+
+### Version 0.7.2
+* Seperated Stripes to more Groups like "PhoneAlarm", "SunRise", etc.
 
 ### Version 0.7.1
 * Added the "astro" stuff as an example.

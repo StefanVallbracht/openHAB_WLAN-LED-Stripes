@@ -1,20 +1,30 @@
-// LED Stripe Groups
+// LED Stripes Groups
 Group gLedStripesPower
 Group gLedStripesWhite
 Group gLedStripesColor
+
+// LED Stripes Sunrise
+Group gLedStripesSunrisePower
+Group gLedStripesSunriseWhite
+Group gLedStripesSunriseColor
+
+// LED Stripes Sunrise
+Group gLedStripesPhoneAlarmPower
+Group gLedStripesPhoneAlarmWhite
+Group gLedStripesPhoneAlarmColor
 
 // Switches for LEDStripes
 Switch LEDStripesBlinkingBrightness "LED Stripes - Blinking Brightness"
 
 // Switches for LEDStripes RoofTop
-Switch DGLEDStripePower "AN/AUS" <poweroutlet> (gLedStripesPower) { channel="wifiled:wifiled:XYZ:power" }
-Dimmer DGLEDStripeWhite "Weiß" (gLedStripesWhite) { channel="wifiled:wifiled:XYZ:white" }
-Color DGLEDStripeColor "Farbe" (gLedStripesColor) { channel="wifiled:wifiled:XYZ:color" }
+Switch DGLEDStripePower "AN/AUS" <poweroutlet> (gLedStripesPower,gLedStripesSunrisePower) { channel="wifiled:wifiled:XYZ:power" }
+Dimmer DGLEDStripeWhite "Weiß" (gLedStripesWhite,gLedStripesSunriseWhite) { channel="wifiled:wifiled:XYZ:white" }
+Color DGLEDStripeColor "Farbe" (gLedStripesColor,gLedStripesSunriseColor) { channel="wifiled:wifiled:XYZ:color" }
 
 // Switches for LEDStripes Stairs
-Switch TreppeLEDStripePower "AN/AUS" <poweroutlet> (gLedStripesPower) { channel="wifiled:wifiled:XYZ:power" } 
-Dimmer TreppeLEDStripeWhite "Weiß" (gLedStripesWhite) { channel="wifiled:wifiled:XYZ:white" } 
-Color TreppeLEDStripeColor "Farbe" (gLedStripesColor) { channel="wifiled:wifiled:XYZ:color" }
+Switch TreppeLEDStripePower "AN/AUS" <poweroutlet> (gLedStripesPower,gLedStripesSunrisePower,gLedStripesPhoneAlarmPower) { channel="wifiled:wifiled:XYZ:power" } 
+Dimmer TreppeLEDStripeWhite "Weiß" (gLedStripesWhite,gLedStripesSunriseWhite,gLedStripesPhoneAlarmWhite) { channel="wifiled:wifiled:XYZ:white" } 
+Color TreppeLEDStripeColor "Farbe" (gLedStripesColor,gLedStripesSunriseColor,gLedStripesPhoneAlarmColor) { channel="wifiled:wifiled:XYZ:color" }
 Switch TreppeLEDStripeEveningLight "TreppeLEDStripeEveningLight"
 
 // Sunrise

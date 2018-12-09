@@ -12,6 +12,7 @@ then
 	var HSBType light
 
 	var Integer sunriseBrightness = (sunriseBrightness.state as DecimalType).intValue   // Maximum % of Light
+	var Integer sunrisePhase1Brightness = (sunrisePhase1Brightness.state as DecimalType).intValue   // Maximum % of Light
 
 	var Integer sunrisePhase1Duration = (sunrisePhase1Duration.state as DecimalType).intValue * 60 * 1000   // * seconds * milliseconds
 	var Integer sunrisePhase2Duration = (sunrisePhase2Duration.state as DecimalType).intValue * 60 * 1000 / sunriseBrightness
@@ -24,11 +25,11 @@ then
 	DimmerCheck=Dimmer
 
 	light = new HSBType(hue,sat,bright)
-	gLedStripesColor.members.forEach[s | s.sendCommand(light)]  // reset the stripe values
-	gLedStripesWhite.members.forEach[s | s.sendCommand(Dimmer)] // reset the stripe values for white
+	gLedStripesSunriseColor.members.forEach[s | s.sendCommand(light)]  // reset the stripe values
+	gLedStripesSunriseWhite.members.forEach[s | s.sendCommand(Dimmer)] // reset the stripe values for white
 
 	postUpdate(sunriseSwitch, ON)  
-	gLedStripesPower.members.forEach[s | s.sendCommand(ON)] // switch the stripes on
+	gLedStripesSunrisePower.members.forEach[s | s.sendCommand(ON)] // switch the stripes on
 
 	logInfo("rules","Sunrise started.")
 	while(sunriseSwitch.state == ON && Dimmer<=sunriseBrightness && Dimmer<100 && (sunrisePhase1Switch.state == ON || sunrisePhase2Switch.state == ON)) // End up at x% brightness
@@ -43,12 +44,12 @@ then
 			if ((Dimmer==1) && (sunrisePhase1Switch.state == ON))
 			{
 				logInfo("rules","Sunrise: 1st phase started. ")
-				gLedStripesColor.members.forEach[s | s.sendCommand(light)]
+				gLedStripesSunriseColor.members.forEach[s | s.sendCommand(light)]
 				Thread::sleep(sunrisePhase1Duration) // if sun arise wait with the light beams
 			} 
 			if (sunrisePhase2Switch.state == ON)
 			{                     
-				gLedStripesColor.members.forEach[s | s.sendCommand(light)]
+				gLedStripesSunriseColor.members.forEach[s | s.sendCommand(light)]
 				if (HueVal<10) {
 					logInfo("rules","Sunrise: 2nd phase started - Color " + HueVal)
 					HueVal = HueVal + 1 // Increment from 0 to 10
@@ -65,7 +66,7 @@ then
 	{
 		if ((sunrisePhase3Switch.state == ON) && (Dimmer==DimmerCheck))
 		{
-			gLedStripesWhite.members.forEach[s | s.sendCommand(Dimmer)]
+			gLedStripesSunriseWhite.members.forEach[s | s.sendCommand(Dimmer)]
 			
 			Dimmer = Dimmer + 1
 			Thread::sleep(sunrisePhase3Duration)

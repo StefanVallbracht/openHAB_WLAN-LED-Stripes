@@ -14,8 +14,8 @@ then
         // saving the current status
         var TEMP_TreppeLEDStripeColor = TreppeLEDStripeColor.state as HSBType
         val TEMP_TreppeLEDStripePower = if (TreppeLEDStripePower.state == ON) 1 else 0
-        var TEMP_DGLEDStripeColor = DGLEDStripeColor.state as HSBType
-        val TEMP_DGLEDStripePower = if (DGLEDStripePower.state == ON) 1 else 0
+        var TEMP_DGStudioLEDStripeColor = DGStudioLEDStripeColor.state as HSBType
+        val TEMP_DGStudioLEDStripePower = if (DGStudioLEDStripePower.state == ON) 1 else 0
 
         // light alarm
 
@@ -29,17 +29,17 @@ then
 
             sat = new PercentType(0)        // set full color
             light = new HSBType(hue,sat,bright)
-            gLedStripesColor.members.forEach[s | s.sendCommand(light)]
+            gLedStripesPhoneAlarm.members.forEach[s | s.sendCommand(light)]
 
-            if (TEMP_TreppeLEDStripePower == 1 && TEMP_DGLEDStripePower == 1){ 
+            if (TEMP_TreppeLEDStripePower == 1 && TEMP_DGStudioLEDStripePower == 1){ 
                 Thread::sleep(1000)
-            } else if (TEMP_TreppeLEDStripePower == 0 || TEMP_DGLEDStripePower == 0){
+            } else if (TEMP_TreppeLEDStripePower == 0 || TEMP_DGStudioLEDStripePower == 0){
                 gLedStripesPower.members.forEach[s | s.sendCommand(ON)]
             }
 
             sat = new PercentType(100)      // set the color "white"
             light = new HSBType(hue,sat,bright)
-            gLedStripesColor.members.forEach[s | s.sendCommand(light)]
+            gLedStripesPhoneAlarm.members.forEach[s | s.sendCommand(light)]
             Thread::sleep(1000)
     
             if (Incoming_Call.state!=ON) {  // Check if it incoming call is off, if yes skip the loop
@@ -52,9 +52,9 @@ then
 
         // set back the previous settings to the stripes
         TreppeLEDStripeColor.sendCommand(TEMP_TreppeLEDStripeColor)
-        DGLEDStripeColor.sendCommand(TEMP_DGLEDStripeColor)
+        DGStudioLEDStripeColor.sendCommand(TEMP_DGStudioLEDStripeColor)
         if (TEMP_TreppeLEDStripePower == 0){ TreppeLEDStripePower.sendCommand(OFF) }
-        if (TEMP_DGLEDStripePower == 0){ DGLEDStripePower.sendCommand(OFF) }
+        if (TEMP_DGStudioLEDStripePower == 0){ DGStudioLEDStripePower.sendCommand(OFF) }
 
     }
 end
