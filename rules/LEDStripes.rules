@@ -12,7 +12,6 @@ then
 	var HSBType light
 
 	var Integer sunriseBrightness = (sunriseBrightness.state as DecimalType).intValue   // Maximum % of Light
-	var Integer sunrisePhase1Brightness = (sunrisePhase1Brightness.state as DecimalType).intValue   // Maximum % of Light
 
 	var Integer sunrisePhase1Duration = (sunrisePhase1Duration.state as DecimalType).intValue * 60 * 1000   // * seconds * milliseconds
 	var Integer sunrisePhase2Duration = (sunrisePhase2Duration.state as DecimalType).intValue * 60 * 1000 / sunriseBrightness
