@@ -7,14 +7,14 @@ sitemap LEDStripes label="LED-Stripes"
             Frame label="LED Stripe Stairs" {             
                 Switch item=TreppeLEDStripePower label="ON/OFF" icon="switch"
                 Slider item=TreppeLEDStripeWhite label="White" icon="Dimmer"
-                Colorpicker item=TreppeLEDStripeColor label="Color" icon="Slider"
+                Colorpicker item=TreppeLEDStripeColor label="Color" icon="colorwheel"
                 Switch item=TreppeLEDStripeEveningLight label="Automatic Evening Mood Light (will be switched at sunset)" icon="switch"
             }
 
             Frame label="LED Stripe Bedroom" {           
                 Switch item=DGLEDStripePower label="ON/OFF" icon="switch"
                 Slider item=DGLEDStripeWhite label="White" icon="Dimmer"
-                Colorpicker item=DGLEDStripeColor label="Color" icon="Slider"
+                Colorpicker item=DGLEDStripeColor label="Color" icon="colorwheel"
             }
 
         }

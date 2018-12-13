@@ -24,11 +24,11 @@ then
 	DimmerCheck=Dimmer
 
 	light = new HSBType(hue,sat,bright)
-	gLedStripesSunriseColor.members.forEach[s | s.sendCommand(light)]  // reset the stripe values
-	gLedStripesSunriseWhite.members.forEach[s | s.sendCommand(Dimmer)] // reset the stripe values for white
+	gLedStripesSunColor.members.forEach[s | s.sendCommand(light)]  // reset the stripe values
+	gLedStripesSunWhite.members.forEach[s | s.sendCommand(Dimmer)] // reset the stripe values for white
 
 	postUpdate(sunriseSwitch, ON)  
-	gLedStripesSunrisePower.members.forEach[s | s.sendCommand(ON)] // switch the stripes on
+	gLedStripesSunPower.members.forEach[s | s.sendCommand(ON)] // switch the stripes on
 
 	logInfo("rules","Sunrise started.")
 	while(sunriseSwitch.state == ON && Dimmer<=sunriseBrightness && Dimmer<100 && (sunrisePhase1Switch.state == ON || sunrisePhase2Switch.state == ON)) // End up at x% brightness
@@ -43,12 +43,12 @@ then
 			if ((Dimmer==1) && (sunrisePhase1Switch.state == ON))
 			{
 				logInfo("rules","Sunrise: 1st phase started. ")
-				gLedStripesSunriseColor.members.forEach[s | s.sendCommand(light)]
+				gLedStripesSunColor.members.forEach[s | s.sendCommand(light)]
 				Thread::sleep(sunrisePhase1Duration) // if sun arise wait with the light beams
 			} 
 			if (sunrisePhase2Switch.state == ON)
 			{                     
-				gLedStripesSunriseColor.members.forEach[s | s.sendCommand(light)]
+				gLedStripesSunColor.members.forEach[s | s.sendCommand(light)]
 				if (HueVal<10) {
 					logInfo("rules","Sunrise: 2nd phase started - Color " + HueVal)
 					HueVal = HueVal + 1 // Increment from 0 to 10
@@ -65,7 +65,7 @@ then
 	{
 		if ((sunrisePhase3Switch.state == ON) && (Dimmer==DimmerCheck))
 		{
-			gLedStripesSunriseWhite.members.forEach[s | s.sendCommand(Dimmer)]
+			gLedStripesSunWhite.members.forEach[s | s.sendCommand(Dimmer)]
 			
 			Dimmer = Dimmer + 1
 			Thread::sleep(sunrisePhase3Duration)
