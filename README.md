@@ -23,18 +23,8 @@ Half an hour before sunset the LED-Stripe will be switched on with a randomized 
 * set the saturation and brightness you would like to have
 
 ## Planned Features
-* BlinkingLight in several colors: Could be used for Phone Alarm, Wake Up Alarm, Disco light, etc.
-* FadingLight in several colors: Could be used for romantic moods, party, etc.
-* Sunrise: Set the brightness of the 1st phase.
-* Sunrise: Final Blue sunrise phase to push the melatonin level ;)
-* Sunrise: Optimised fading
-* Evening light: Set when the light will be switched off or how long it should stay switched on.
-* Sunset
-* Phone Alarm: To set colors to the phone alarm - depending on who is calling  
-* TV Simulator (to fake that someone is at home)
-
-(Any suggestions? Please let me know!)
-
+Because I moved from openHab over to Node Red this project is depricated.
+I developed similar things there which possibly can be found as a "flow" on node-red.org
 
 ## Change Log:
 
